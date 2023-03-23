@@ -266,58 +266,120 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
       },
 
+      // addToFavorites: (uid, url, name, type, index) => {
+      //   const store = getStore();
+
+      //   if (type == "people") {
+      //     store.people[index].favorite = true;
+      //   }
+      //   if (type == "vehicles") {
+      //     store.vehicles[index].favorite = true;
+      //   }
+      //   if (type == "planets") {
+      //     store.planets[index].favorite = true;
+      //   }
+      //   let temp = store.favorites;
+
+      //   temp.push({
+      //     index: index,
+      //     uid: uid,
+      //     url: url,
+      //     name: name,
+      //     type: type,
+      //     favorite: true,
+      //   });
+
+      //   const names = temp.map((o) => o.name);
+      //   const filtered = temp.filter(
+      //     ({ name }, index) => !names.includes(name, index + 1)
+      //   );
+
+      //   setStore({ favorites: filtered });
+      // },
+
+      // removeFromFavorites: (i) => {
+      //   const store = getStore();
+
+      //   if (i.type == "people") {
+      //     store.people[i.index].favorite = false;
+      //   }
+      //   if (i.type == "vehicles") {
+      //     store.vehicles[i.index].favorite = false;
+      //   }
+      //   if (i.type == "planets") {
+      //     store.planets[i.index].favorite = false;
+      //   }
+
+      //   let temp = store.favorites;
+
+      //   let testeVar = temp.filter((objecto) => {
+      //     return objecto !== i;
+      //   });
+
+      //   setStore({ favorites: testeVar });
+      // },
+
+
       addToFavorites: (uid, url, name, type, index) => {
         const store = getStore();
-
-        if (type == "people") {
-          store.people[index].favorite = true;
+        const favoritesIndex = store.favorites.findIndex((f) => f.uid === uid);
+        if (favoritesIndex > -1) {
+          store.favorites.splice(favoritesIndex, 1);
+          if (type === "people") {
+            store.people[index].favorite = false;
+          } else if (type === "vehicles") {
+            store.vehicles[index].favorite = false;
+          } else if (type === "planets") {
+            store.planets[index].favorite = false;
+          }
+        } else {
+          store.favorites.push({
+            index: index,
+            uid: uid,
+            url: url,
+            name: name,
+            type: type,
+            favorite: true,
+          });
+          if (type === "people") {
+            store.people[index].favorite = true;
+          } else if (type === "vehicles") {
+            store.vehicles[index].favorite = true;
+          } else if (type === "planets") {
+            store.planets[index].favorite = true;
+          }
         }
-        if (type == "vehicles") {
-          store.vehicles[index].favorite = true;
-        }
-        if (type == "planets") {
-          store.planets[index].favorite = true;
-        }
-        let temp = store.favorites;
-
-        temp.push({
-          index: index,
-          uid: uid,
-          url: url,
-          name: name,
-          type: type,
-          favorite: true,
-        });
-
-        const names = temp.map((o) => o.name);
-        const filtered = temp.filter(
-          ({ name }, index) => !names.includes(name, index + 1)
-        );
-
-        setStore({ favorites: filtered });
+        setStore({ favorites: store.favorites });
       },
-
+      
+      
       removeFromFavorites: (i) => {
         const store = getStore();
-
-        if (i.type == "people") {
-          store.people[i.index].favorite = false;
-        }
-        if (i.type == "vehicles") {
-          store.vehicles[i.index].favorite = false;
-        }
-        if (i.type == "planets") {
-          store.planets[i.index].favorite = false;
-        }
-
         let temp = store.favorites;
-
-        let testeVar = temp.filter((objecto) => {
-          return objecto !== i;
-        });
-
-        setStore({ favorites: testeVar });
+      
+        // Find the element in the favorites list
+        for (let j = 0; j < temp.length; j++) {
+          if (temp[j].uid === i.uid && temp[j].type === i.type) {
+            // Set its favorite property to false
+            if (i.type === "people") {
+              store.people[i.index].favorite = false;
+            }
+            if (i.type === "vehicles") {
+              store.vehicles[i.index].favorite = false;
+            }
+            if (i.type === "planets") {
+              store.planets[i.index].favorite = false;
+            }
+      
+            // Remove it from the favorites list
+            temp.splice(j, 1);
+            break;
+          }
+        }
+      
+        setStore({ favorites: temp });
       },
+      
 
 //------------------------------------------------------------------------------------------------
 //											 GET USERS

@@ -7,15 +7,8 @@ import { Navbar } from "../component/navbar";
 
 export const Home = () => (
   <div>
-    <Navbar />
+    
 	<div className="text-center mt-5">
-
-    <button>
-      <Link to="/charactersint">int</Link>
-    </button>
-    <button>
-      <Link to="/characters">API</Link>
-    </button>
 
 		<section className="intro">
   A long time ago, in a galaxy far,<br/> far away....

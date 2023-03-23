@@ -1,7 +1,8 @@
 import React, { useContext } from 'react'
 import { Context } from '../../store/appContext';
 import { Link } from 'react-router-dom';
-import NavbarExt from '../../component/NavbarExt';
+import ReactImageFallback from "react-image-fallback";
+import car from "../../../img/car.jpg"
 
 const Vehicles = () => {
   const { store, actions } = useContext(Context);
@@ -11,7 +12,7 @@ const Vehicles = () => {
 
   return (
     <div>
-      <NavbarExt />
+    
     <div className="container">
       <h1 className="text-light">Vehicles</h1>
       <div className="row row-cols-5 g-3 justify-content-center">
@@ -24,17 +25,18 @@ const Vehicles = () => {
         }
 
         return (
-          <div key={i.index} className="col">
+          <div key={i.index} className="cardV m-1 col-12 col-md-5 col-xl-2">
             <div className="card m-3 text-light border-light">
-            <img
-              src={
-                "https://starwars-visualguide.com/assets/img/vehicles/" +
-                i.uid +
-                ".jpg"
-              }
-              className="card-img-top"
-              alt="..."
-            />
+    
+                  <ReactImageFallback
+                    src={"https://starwars-visualguide.com/assets/img/vehicles/" +
+                    i.uid +
+                    ".jpg"}
+                    fallbackImage={car}
+                    initialImage=""
+                    alt="cool image should be here"
+                    className="card-img-top"/>
+
             <div className="card-body">
               <h5 className="card-title">{i.name}</h5>
               <div className="d-flex justify-content-between">
@@ -43,7 +45,10 @@ const Vehicles = () => {
                     Learn More
                   </button> 
                  </Link>
-               <button
+               
+
+              {store.auth ? (
+              <button
                   className="btn btn-warning"
                   onClick={() =>
                     actions.addToFavorites(
@@ -56,6 +61,9 @@ const Vehicles = () => {
               >
                 <i className={favIcon} />
               </button>
+              ) : null}{" "}
+
+
             </div>
             </div>
             </div>

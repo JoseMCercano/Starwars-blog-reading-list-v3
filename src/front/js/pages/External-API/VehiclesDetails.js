@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
-import NavbarExt from '../../component/NavbarExt';
+
 import { Context } from '../../store/appContext';
 
 const VehiclesDetails = () => {
@@ -13,7 +13,7 @@ const VehiclesDetails = () => {
     },[])
   return (
 	<div>
-		<NavbarExt />
+		
     <div className="jumbotron">
 
 			<div className="card" style={{ maxWidth: "60%", margin: "auto", background: "#282727" }}>

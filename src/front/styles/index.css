@@ -50,6 +50,16 @@
     border: 1px solid rgb(124, 29, 29);
 }
 
+.cardP {
+    background-color: transparent;    
+    min-width: 260px;
+}
+
+.cardV {
+    background-color: transparent;    
+    min-width: 250px;
+}
+
 .textCard{
     color: rgb(229, 229, 238);
     font-size: 30px;

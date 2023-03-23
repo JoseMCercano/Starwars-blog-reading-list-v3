@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import NavbarInt from "../../component/NavbarInt";
+
 import { Context } from "../../store/appContext";
 import { Link } from "react-router-dom";
 
@@ -14,7 +14,7 @@ const CharactersInt = () => {
 
   return (
     <div>
-      <NavbarInt />
+      
       <div className="container">
         <h1>Characters Internal</h1>
         <div className="row row-cols-5 g-3 justify-content-center">

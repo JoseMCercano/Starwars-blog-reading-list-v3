@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import { Context } from '../../store/appContext'
-import NavbarInt from '../../component/NavbarInt';
+
 
 const PlanetsDetailsInt = () => {
   const { store, actions } = useContext(Context);
@@ -13,7 +13,7 @@ const PlanetsDetailsInt = () => {
 
   return (
     <div>
-		<NavbarInt />
+		
     <div className="jumbotron ">
 
 			<div className="card" style={{ maxWidth: "60%", margin: "auto", background: "#282727"}}>

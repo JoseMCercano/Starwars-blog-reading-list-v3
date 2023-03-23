@@ -74,7 +74,7 @@ const SignUp = () => {
                         </h2>
                         <p className="mt-3 mb-3" style={{ color: "#bdb284" }}>
                           Already registered?{" "}
-                          <Link to="/login" className="text-black-50 fw-bold">
+                          <Link to="/login" className="text-white-50 fw-bold">
                             Login
                           </Link>
                         </p>
@@ -121,7 +121,7 @@ const SignUp = () => {
                         <p className="small mb-3 pb-lg-2">
                           <br />
                           <Link
-                            className="text-black-50"
+                            className="text-white-50"
                             to={"/changePassword"}
                           >
                             Forgot password?

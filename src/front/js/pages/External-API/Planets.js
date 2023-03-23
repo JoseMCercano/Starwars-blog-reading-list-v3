@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
 import { Context } from "../../store/appContext";
 import { Link } from "react-router-dom";
-import NavbarExt from "../../component/NavbarExt";
+import panda from "../../../img/panda.png"
+import ReactImageFallback from "react-image-fallback";
 
 const Planets = () => {
   const { store, actions } = useContext(Context);
@@ -10,7 +11,7 @@ const Planets = () => {
 
   return (
     <div>
-      <NavbarExt />
+      
     <div className="container">
       <h1 className="text-light">Planets</h1>
       <div className="row row-cols-5 g-3 justify-content-center">
@@ -22,17 +23,19 @@ const Planets = () => {
           }
 
           return (
-            <div key={i.index} className="col">
+            <div key={i.index} className="cardP col-12 col-md-5 col-xl-2">
               <div className="card m-3 text-light border-light">
-                <img
-                  src={
-                    "https://starwars-visualguide.com/assets/img/planets/" +
+               
+
+                  <ReactImageFallback
+                    src={"https://starwars-visualguide.com/assets/img/planets/" +
                     i.uid +
-                    ".jpg"
-                  }
-                  className="card-img-top"
-                  alt="..."
-                />
+                    ".jpg" }
+                    fallbackImage={panda}
+                    initialImage=""
+                    alt="cool image should be here"
+                    className="card-img-top"/>
+
                 <div className="card-body">
                   <h5 className="card-title">{i.name}</h5>
                   <div className="d-flex justify-content-between">
@@ -42,7 +45,10 @@ const Planets = () => {
                       </button>
                     </Link>
 
-                    <button
+                    
+
+                    {store.auth ? (
+              <button
                       className="btn btn-warning"
                       onClick={() =>
                         actions.addToFavorites(
@@ -56,6 +62,9 @@ const Planets = () => {
                     >
                       <i className={favIcon} />
                     </button>
+                    ) : null}{" "}
+
+
                   </div>
                 </div>
               </div>
