@@ -17,7 +17,6 @@ import PlanetsDetails from "./pages/External-API/PlanetsDetails";
 import Vehicles from "./pages/External-API/Vehicles";
 import VehiclesDetails from "./pages/External-API/VehiclesDetails";
 
-import Testing from "./pages/External-API/Testing";
 import SignUp from "./pages/LoginPages/Signup";
 import Login from "./pages/LoginPages/Login";
 
@@ -44,7 +43,6 @@ const Layout = () => {
                         
                         <Route element={<SignUp />} path="/signup" />
                         <Route element={<Login />} path="/login" />
-                        <Route element={<Testing />} path="/testing" />
 
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />

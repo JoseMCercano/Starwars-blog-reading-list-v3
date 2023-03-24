@@ -58,6 +58,7 @@ export const Navbar = () => {
       </nav>
 
       {/* Segundo NAV */}
+
       <nav className="navBar2 navbar  ">
         <div className="container-fluid  d-flex justify-content-center">
           <li className="me-5 nav-item  ">
@@ -75,6 +76,7 @@ export const Navbar = () => {
               Vehicles
             </Link>
           </li>
+          {/* this seach in the store the auth, if is true and user is logged then will show the favorites button */}
           {store.auth ? (
             <div className="me-5 nav-item btn-group dropright">
               <button

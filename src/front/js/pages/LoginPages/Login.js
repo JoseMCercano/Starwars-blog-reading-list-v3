@@ -14,6 +14,7 @@ const Login = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  // this is a library called yup that it validates the signin and login forms to get the correct input from the user
   const SignupSchema = Yup.object().shape({
     email: Yup.string("Enter your email")
       .email("Enter a valid email")
@@ -99,7 +100,6 @@ const Login = () => {
                         </p>
                         <button
                           type="submit"
-                          // disabled={isSubmitting}
                           className="btn btn-outline-light btn-lg mx-2 px-5"
                           style={{ color: "#bdb284" }}
                           color="white"

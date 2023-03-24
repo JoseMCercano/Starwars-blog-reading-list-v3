@@ -35,16 +35,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       auth: false,
       registered: false,
       profile: {},
-
-      character: [],
-      characterDetail: {},
-      characterId: null,
-	    planet: [],
-	    planetDetail: {},
-	    planetId: null,
-	    vehicle: [],
-	    vehicleDetail: {},
-	    vehicleId: null,
       
 		},
 		actions: {
@@ -89,6 +79,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 //											EXT API FETCHS
 //-------------------------------------------------------------------------------------------
 
+
+      // this fetch is to get all characters, 10 characters per page, and aloud to go to next and previous pages
+
       getPeople: (varPag) => {
         const store = getStore();
         let fetchVar = "";
@@ -119,6 +112,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
       },
 
+      // This fetch get the character details based in uid(unique id)
+
       getPerson: (uid) => {
         const store = getStore();
         fetch("https://www.swapi.tech/api/people/" + uid, {
@@ -134,6 +129,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             setStore({ person: dataGathered });
           });
       },
+
+      // this fetch is to get all vehicles, 10 vehicles per page, and aloud to go to next and previous pages
+
 
       getVehicles: (varPag) => {
         const store = getStore();
@@ -168,22 +166,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             setStore({ next: data.next });
             setStore({ previous: data.previous });
           });
-        // const store = getStore();
-        // fetch("https://www.swapi.tech/api/vehicles/", {
-        // 	method: "GET",
-        // 	headers: { "Content-Type": "application/json" },
-        // })
-        // 	.then((resp) => {
-        // 		return resp.json();
-        // 	})
-        // 	.then(data => {
-        // 		let dataGathered = data.results.map((item,index) => {
-        // 			return {...item,index:index,type:"vehicles",favorite:false};
-        // 		});
-
-        // 		setStore({vehicles : dataGathered});
-        // 	})
       },
+
+      // This fetch get the vehicle details based in uid(unique id)
 
       getSingleVehicle: (uid) => {
         const store = getStore();
@@ -200,6 +185,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             setStore({ singleVehicle: dataGathered });
           });
       },
+
+      // this fetch is to get all planets, 10 vehicles per page, and aloud to go to next and previous pages
 
       getPlanets: (varPag) => {
         const store = getStore();
@@ -232,23 +219,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             setStore({ next: data.next });
             setStore({ previous: data.previous });
           });
-
-        // const store = getStore();
-        // fetch("https://www.swapi.tech/api/planets/", {
-        // 	method: "GET",
-        // 	headers: { "Content-Type": "application/json" },
-        // })
-        // 	.then((resp) => {
-        // 		return resp.json();
-        // 	})
-        // 	.then(data => {
-        // 		let dataGathered = data.results.map((item,index) => {
-        // 			return {...item,index:index,type:"planets",favorite:false};
-        // 		});
-
-        // 		setStore({planets : dataGathered});
-        // 	})
       },
+
+      // This fetch get the planet details based in uid(unique id)
 
       getSinglePlanet: (uid) => {
         const store = getStore();
@@ -266,59 +239,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
       },
 
-      // addToFavorites: (uid, url, name, type, index) => {
-      //   const store = getStore();
-
-      //   if (type == "people") {
-      //     store.people[index].favorite = true;
-      //   }
-      //   if (type == "vehicles") {
-      //     store.vehicles[index].favorite = true;
-      //   }
-      //   if (type == "planets") {
-      //     store.planets[index].favorite = true;
-      //   }
-      //   let temp = store.favorites;
-
-      //   temp.push({
-      //     index: index,
-      //     uid: uid,
-      //     url: url,
-      //     name: name,
-      //     type: type,
-      //     favorite: true,
-      //   });
-
-      //   const names = temp.map((o) => o.name);
-      //   const filtered = temp.filter(
-      //     ({ name }, index) => !names.includes(name, index + 1)
-      //   );
-
-      //   setStore({ favorites: filtered });
-      // },
-
-      // removeFromFavorites: (i) => {
-      //   const store = getStore();
-
-      //   if (i.type == "people") {
-      //     store.people[i.index].favorite = false;
-      //   }
-      //   if (i.type == "vehicles") {
-      //     store.vehicles[i.index].favorite = false;
-      //   }
-      //   if (i.type == "planets") {
-      //     store.planets[i.index].favorite = false;
-      //   }
-
-      //   let temp = store.favorites;
-
-      //   let testeVar = temp.filter((objecto) => {
-      //     return objecto !== i;
-      //   });
-
-      //   setStore({ favorites: testeVar });
-      // },
-
+      // this add to favorites based in its type
 
       addToFavorites: (uid, url, name, type, index) => {
         const store = getStore();
@@ -352,6 +273,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ favorites: store.favorites });
       },
       
+      // delete favorites
       
       removeFromFavorites: (i) => {
         const store = getStore();
@@ -381,95 +303,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       
 
-//------------------------------------------------------------------------------------------------
-//											 GET USERS
-//------------------------------------------------------------------------------------------------
 
-      userProfile: async () => {
-        // looks for a token
-        const userToken = localStorage.getItem("token");
-        try {
-          const response = await axios.get(
-            process.env.BACKEND_URL + "/api/profile",
-            {
-              headers: {
-                Authorization: "Bearer " + userToken,
-              },
-            }
-          );
-          // console.log(data)
-          setStore({
-            profile: response.data.user,
-          });
-          // console.log(response.data);
-          return true;
-        } catch (error) {
-          // console.log(error);
-          if (error.code === "ERR_BAD_REQUEST") {
-            // console.log(error.response.data.msg);
-            return;
-          }
-        }
-      },
-
-//-----------------------------------------------------------------------------------------------------
-//											PUT UPDATE USERS
-//----------------------------------------------------------------------------------------------------
-
-      updateUser: async (password, name, lastname, country) => {
-        // bring user data by id
-        let store = getStore();
-        let user_id = store.userId;
-        try {
-          const response = await axios.put(
-            process.env.BACKEND_URL + "/api/user/" + user_id,
-            {
-              //   email: email,
-              //   username: username,
-              password: password,
-              name: name,
-              lastname: lastname,
-              country: country,
-            }
-          );
-          // Sweet alert
-          Swal.fire({
-            position: "top",
-            icon: "success",
-            title: "Your work has been saved",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          console.log(response);
-        } catch (error) {
-          // Error codes
-          // console.log(error);
-          if (error.response.status === 401) {
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: error.response.data.msg,
-            });
-            return error.response.data.msg;
-          }
-          if (error.response.status === 409) {
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: error.response.data.msg,
-            });
-            return error.response.data.msg;
-          }
-          if (error.response.status === 404) {
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: error.response.data.msg,
-            });
-            return error.response.data.msg;
-          }
-        }
-      },
 
 //----------------------------------------------------------------------------------------------------
 //											 LOGIN POST
@@ -619,188 +453,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             });
           }
           return false;
-        }
-      },
-
-//-----------------------------------------------------------------------------------------------------
-//											 PASSWORD CHANGE POST
-//-----------------------------------------------------------------------------------------------------
-
-      changePassword: async (email) => {
-        try {
-          const response = await axios.post(
-            process.env.BACKEND_URL + "/api/user/password",
-            {
-              email: email,
-            }
-          );
-          if (response.status === 200) {
-            swal("Your password has been sent to your email");
-          }
-        } catch (error) {
-          if (error.response.data.msg === "User email doesn't exist") {
-            swal("Your email does not exist");
-          }
-        }
-      },
-
-//---------------------------------------------------------------------------------------------------
-//											USER DELETE
-//---------------------------------------------------------------------------------------------------
-
-      deleteAccount: async () => {
-        let store = getStore();
-        let user_id = store.userId;
-        try {
-          const response = await axios.delete(
-            process.env.BACKEND_URL + "/api/user/" + user_id,
-            {}
-          );
-          console.log(response.data.msg);
-
-          if (response.status === 200) {
-            setStore({
-              auth: false,
-            });
-            return response;
-          }
-        } catch (error) {
-          console.log(error);
-          if (error.response.status === 404) {
-            Swal.fire(error.response.msg);
-          }
-        }
-      },
-
-//---------------------------------------------------------------------------------------------------------------
-//											 GET CHARACTERS
-//--------------------------------------------------------------------------------------------------------------
-
-      getCharacters: async () => {
-        try {
-          const response = await fetch(
-            process.env.BACKEND_URL + "/api/home-internal/characters"
-          );
-
-          const data = await response.json();
-          setStore({
-            character: data,
-          });
-        } catch (err) {
-          console.log(err);
-        }
-      },
-
-//-------------------------------------------------------------------------------------------------------------
-//											 GET CHARACTERS DETAILS
-//-------------------------------------------------------------------------------------------------------------
-
-      getCharactersDetail: async (id) => {
-        let store = getStore();
-        try {
-          const response = await fetch(
-            process.env.BACKEND_URL + "/api/home-internal/characters/" + id
-          );
-
-          const data = await response.json();
-          // console.log(data);
-          setStore({
-            characterDetail: data,
-            characterId: data.id,
-          });
-          // console.log(store.characterDetail);
-          // console.log(store.characterId);
-          return store.characterId;
-        } catch (err) {
-          console.log(err);
-        }
-      },
-
-//--------------------------------------------------------------------------------------------------------------
-//											 GET PLANETS
-//--------------------------------------------------------------------------------------------------------------
-
-      getPlanetsInt: async () => {
-        try {
-          const response = await fetch(
-            process.env.BACKEND_URL + "/api/home-internal/planets"
-          );
-          const data = await response.json();
-
-          setStore({
-            planet: data,
-          });
-        } catch (err) {
-          console.log(err);
-        }
-      },
-
-//---------------------------------------------------------------------------------------------------------------
-//											 GET PLANETS DETAILS
-//---------------------------------------------------------------------------------------------------------------
-
-      getPlanetsDetail: async (id) => {
-        let store = getStore();
-        try {
-          const response = await fetch(
-            process.env.BACKEND_URL + "/api/home-internal/planets/" + id
-          );
-
-          const data = await response.json();
-          // console.log(data);
-          setStore({
-            planetDetail: data,
-            planetId: data.id,
-          });
-          // console.log(store.planetDetail);
-          // console.log(store.planetId);
-          return store.planetId;
-        } catch (err) {
-          console.log(err);
-        }
-      },
-
-//--------------------------------------------------------------------------------------------------------------
-//											 GET VEHICLES
-//--------------------------------------------------------------------------------------------------------------
-
-      getVehiclesInt: async () => {
-        try {
-          const response = await fetch(
-            process.env.BACKEND_URL + "/api/home-internal/vehicles"
-          );
-          const data = await response.json();
-
-          setStore({
-            vehicle: data,
-          });
-        } catch (err) {
-          console.log(err);
-        }
-      },
-
-//-------------------------------------------------------------------------------------------------------------
-//											 GET VEHICLES DETAILS
-//-------------------------------------------------------------------------------------------------------------
-
-      getVehiclesDetail: async (id) => {
-        let store = getStore();
-        try {
-          const response = await fetch(
-            process.env.BACKEND_URL + "/api/home-internal/vehicles/" + id
-          );
-
-          const data = await response.json();
-          // console.log(data);
-          setStore({
-            vehicleDetail: data,
-            vehicleId: data.id,
-          });
-          // console.log(store.vehicleDetail);
-          // console.log(store.vehicleId);
-          return store.vehicleId;
-        } catch (err) {
-          console.log(err);
         }
       },
 
